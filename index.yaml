@@ -3,6 +3,21 @@ entries:
   cloud-pricing-api:
   - apiVersion: v2
     appVersion: v0.3.1
+    created: "2021-10-26T15:50:22.220859776Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.x.x
+    description: A Helm chart for running the Infracost [Cloud Pricing API](https://github.com/infracost/cloud-pricing-api).
+    digest: 663baea821be2668ee3a0a40aa5448e90cc78731149b18477e894d178c497a67
+    name: cloud-pricing-api
+    type: application
+    urls:
+    - https://github.com/infracost/helm-charts/releases/download/cloud-pricing-api-0.4.3/cloud-pricing-api-0.4.3.tgz
+    version: 0.4.3
+  - apiVersion: v2
+    appVersion: v0.3.1
     created: "2021-10-25T09:55:09.925760394Z"
     dependencies:
     - condition: postgresql.enabled
@@ -106,4 +121,4 @@ entries:
     urls:
     - https://github.com/infracost/helm-charts/releases/download/cloud-pricing-api-0.0.1/cloud-pricing-api-0.0.1.tgz
     version: 0.0.1
-generated: "2021-10-25T09:55:09.925803094Z"
+generated: "2021-10-26T15:50:22.221200698Z"
