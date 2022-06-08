@@ -204,6 +204,10 @@ helm upgrade cloud-pricing-api infracost/cloud-pricing-api \
     --set postgresql.postgresqlPassword="STRONG_PASSWORD_HERE"
 ```
 
+## Troubleshooting
+
+Please see [this section](https://www.infracost.io/docs/cloud_pricing_api/self_hosted/#troubleshooting) and join our [community Slack channel](https://www.infracost.io/community-chat), we'll help you very quickly 😄
+
 ## Development
 
 To install the chart from your local repository with the name `my-release`:
