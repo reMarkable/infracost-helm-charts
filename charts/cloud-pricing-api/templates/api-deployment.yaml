@@ -20,6 +20,10 @@ spec:
       labels:
         {{- include "cloud-pricing-api.selectorLabels" . | nindent 8 }}
     spec:
+      volumes:
+      {{- if .Values.extraVolumes }} 
+{{ toYaml .Values.extraVolumes | indent 6 }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -69,6 +73,10 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 12 }}
+          {{end}}
           env:
             - name: POSTGRES_HOST
               value: {{ include "cloud-pricing-api.postgresql.host" . }}
