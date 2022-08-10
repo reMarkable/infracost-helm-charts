@@ -75,7 +75,11 @@ spec:
                 - name: SELF_HOSTED_INFRACOST_API_KEY
                   valueFrom:
                     secretKeyRef:
+                      {{- if not .Values.api.existingSelfHostedSecretAPIKey }}
                       name: {{ include "cloud-pricing-api.fullname" . }}
+                      {{- else }}
+                      name: {{ .Values.api.existingSelfHostedSecretAPIKey }}
+                      {{- end}}
                       key: self-hosted-infracost-api-key
                 {{- end }}
                 - name: LOG_LEVEL
