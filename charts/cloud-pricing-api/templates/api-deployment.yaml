@@ -22,7 +22,7 @@ spec:
     spec:
       volumes:
       {{- if .Values.extraVolumes }} 
-      {{ toYaml .Values.extraVolumes | indent 6 }}
+      {{ toYaml .Values.extraVolumes | nindent 6 }}
       {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -75,7 +75,7 @@ spec:
             {{- toYaml .Values.api.resources | nindent 12 }}
           volumeMounts:
           {{- if .Values.extraVolumeMounts }}
-          {{ toYaml .Values.extraVolumeMounts | indent 12 }}
+          {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
           {{end}}
           env:
             - name: POSTGRES_HOST
