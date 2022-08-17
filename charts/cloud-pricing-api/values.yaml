@@ -64,6 +64,7 @@ service:
   annotations:
     {}
 
+# -- Optionally specify additional volumes
 extraVolumes: []
 #   - name: some-volume-name
 #     emptyDir: {}
