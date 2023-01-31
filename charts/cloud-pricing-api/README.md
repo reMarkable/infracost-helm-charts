@@ -66,7 +66,7 @@ The best way to get instructions for configuring Infracost to use the self-hoste
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | 10.x.x |
+| https://charts.bitnami.com/bitnami | postgresql | 11.x.x |
 
 ## Values
 
