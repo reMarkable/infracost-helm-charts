@@ -98,15 +98,16 @@ ingress:
 postgresql:
   # -- Deploy PostgreSQL servers. See [below](#postgresql) for more details
   enabled: true
-  # -- Use an existing secret with the PostgreSQL password
-  existingSecret: ""
-  # -- Have the secrets mounted as a file instead of env vars
-  usePasswordFile: false
-  # -- Name of the PostgreSQL database
-  postgresqlDatabase: cloudpricingapi
-  # -- Name of the PostgreSQL user
-  postgresqlUsername: cloudpricingapi
-  # -- Details of external PostgreSQL server, such as AWS RDS, to use (assuming you've set postgresql.enabled to false. NOTE: In this case if existingSecret is set, it will be used for external.password)
+  auth:
+    # -- Use an existing secret with the PostgreSQL password
+    existingSecret: ""
+    # -- Have the secrets mounted as a file instead of env vars
+    usePasswordFile: false
+    # -- Name of the PostgreSQL database
+    database: cloudpricingapi
+    # -- Name of the PostgreSQL user
+    username: cloudpricingapi
+    # -- Details of external PostgreSQL server, such as AWS RDS, to use (assuming you've set postgresql.enabled to false. NOTE: In this case if existingSecret is set, it will be used for external.password)
   external: {}
   #   host:
   #   port:
@@ -127,7 +128,7 @@ api:
 
   # -- Replica count
   replicaCount: 1
-  
+
   topologySpread:
     # -- Enable Pods spreading among zones
     enabled: false

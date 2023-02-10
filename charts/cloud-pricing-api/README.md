@@ -15,7 +15,7 @@ Installing the chart will create three pods: PostgreSQL DB, Cloud Pricing API, a
   # Run `infracost auth login` to create an API key, this is used by the weekly job to download the latest cloud pricing data from us.
   helm install cloud-pricing-api infracost/cloud-pricing-api \
     --set infracostAPIKey="YOUR_INFRACOST_API_KEY_HERE" \
-    --set postgresql.auth.postgresPassword="STRONG_PASSWORD_HERE"
+    --set postgresql.auth.password="STRONG_PASSWORD_HERE"
   ```
 
   We recommend you create an [ingress route](#install-in-aws-with-alb-ingress) so your Infracost CLI users can connect to your self-hosted Cloud Pricing API.
@@ -136,12 +136,12 @@ The best way to get instructions for configuring Infracost to use the self-hoste
 | nameOverride | string | `""` | Name override for the deployed app |
 | podAnnotations | object | `{}` | Any pod annotations |
 | podSecurityContext | object | `{}` | The pod security context |
+| postgresql.auth.database | string | `"cloudpricingapi"` | Name of the PostgreSQL database |
+| postgresql.auth.existingSecret | string | `""` | Use an existing secret with the PostgreSQL password |
+| postgresql.auth.usePasswordFile | bool | `false` | Have the secrets mounted as a file instead of env vars |
+| postgresql.auth.username | string | `"cloudpricingapi"` | Name of the PostgreSQL user |
 | postgresql.enabled | bool | `true` | Deploy PostgreSQL servers. See [below](#postgresql) for more details |
-| postgresql.existingSecret | string | `""` | Use an existing secret with the PostgreSQL password |
-| postgresql.external | object | `{}` | Details of external PostgreSQL server, such as AWS RDS, to use (assuming you've set postgresql.enabled to false. NOTE: In this case if existingSecret is set, it will be used for external.password) |
-| postgresql.postgresqlDatabase | string | `"cloudpricingapi"` | Name of the PostgreSQL database |
-| postgresql.postgresqlUsername | string | `"cloudpricingapi"` | Name of the PostgreSQL user |
-| postgresql.usePasswordFile | bool | `false` | Have the secrets mounted as a file instead of env vars |
+| postgresql.external | object | `{}` |  |
 | secretAnnotations | object | `{}` |  |
 | securityContext | object | `{}` | The container security context |
 | service.annotations | object | `{}` |  |
@@ -168,7 +168,7 @@ helm install -f my-values.yaml cloud-pricing-api infracost/cloud-pricing-api
 
 ## PostgreSQL
 
-By default, PostgreSQL is installed as part of the chart using the [Bitnami PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md). You can specify the values for this chart by prefixing them with `postgresql.`. To avoid issues when upgrading this chart, provide `postgresql.auth.postgresPassword` for subsequent installs and upgrades. This is due to an issue in the PostgreSQL chart where password will be overwritten with randomly generated passwords otherwise. See [here](https://github.com/helm/charts/tree/master/stable/postgresql#upgrade) for more detail.
+By default, PostgreSQL is installed as part of the chart using the [Bitnami PostgreSQL chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md). You can specify the values for this chart by prefixing them with `postgresql.`. To avoid issues when upgrading this chart, provide `postgresql.auth.password` for subsequent installs and upgrades. This is due to an issue in the PostgreSQL chart where password will be overwritten with randomly generated passwords otherwise. See [here](https://github.com/helm/charts/tree/master/stable/postgresql#upgrade) for more detail.
 
 To use an external PostgreSQL server (such as AWS RDS or Azure Database for PostgreSQL), set `postgresql.enabled` to `false` and set the `postgresql.external.*` values:
 sh
@@ -218,7 +218,7 @@ kubectl delete job -n my-namespace cloud-pricing-api-init-job
 
 helm upgrade cloud-pricing-api infracost/cloud-pricing-api \
     --set infracostAPIKey="YOUR_INFRACOST_API_KEY_HERE" \
-    --set postgresql.auth.postgresPassword="STRONG_PASSWORD_HERE"
+    --set postgresql.auth.password="STRONG_PASSWORD_HERE"
 ```
 
 ### v0.5 -> v0.6

@@ -58,7 +58,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "cloud-pricing-api.postgresql.secretName" . }}
-                  key: postgres-password
+                  key: {{ include "cloud-pricing-api.postgresql.secretPasswordKey" . }}
             {{- if .Values.job.infracostPricingAPIEndpoint }}
             - name: INFRACOST_PRICING_API_ENDPOINT
               value: {{ .Values.job.infracostPricingAPIEndpoint }}

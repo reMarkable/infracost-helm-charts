@@ -102,7 +102,7 @@ Get PostgreSQL database
 */}}
 {{- define "cloud-pricing-api.postgresql.database" -}}
 {{- if .Values.postgresql.enabled -}}
-  {{- .Values.postgresql.postgresqlDatabase -}}
+  {{- .Values.postgresql.auth.database -}}
 {{- else -}}
   {{ .Values.postgresql.external.database }}
 {{- end -}}
@@ -113,7 +113,7 @@ Get PostgreSQL user
 */}}
 {{- define "cloud-pricing-api.postgresql.user" -}}
 {{- if .Values.postgresql.enabled -}}
-  {{- .Values.postgresql.postgresqlUsername -}}
+  {{- .Values.postgresql.auth.username -}}
 {{- else -}}
   {{ .Values.postgresql.external.user }}
 {{- end -}}
@@ -124,16 +124,27 @@ Get the PostgreSQL secret name
 */}}
 {{- define "cloud-pricing-api.postgresql.secretName" -}}
 {{- if .Values.postgresql.enabled }}
-    {{- if .Values.postgresql.existingSecret }}
-        {{- printf "%s" .Values.postgresql.existingSecret -}}
+    {{- if .Values.postgresql.auth.existingSecret }}
+        {{- printf "%s" .Values.postgresql.auth.existingSecret -}}
     {{- else -}}
         {{- printf "%s" (include "cloud-pricing-api.postgresql.fullname" .) -}}
     {{- end -}}
 {{- else -}}
-    {{- if .Values.postgresql.existingSecret }}
-        {{- printf "%s" .Values.postgresql.existingSecret -}}
+    {{- if .Values.postgresql.auth.existingSecret }}
+        {{- printf "%s" .Values.postgresql.auth.existingSecret -}}
     {{- else -}}
       {{- printf "%s" (include "cloud-pricing-api.fullname" .) -}}
     {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Get the PostgreSQL secret password key
+*/}}
+{{- define "cloud-pricing-api.postgresql.secretPasswordKey" -}}
+{{- if and (not .Values.postgresql.enabled) (not .Values.postgresql.auth.existingSecret) -}}
+  postgres-password
+{{- else -}}
+  password
 {{- end -}}
 {{- end -}}
